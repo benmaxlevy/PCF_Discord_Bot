@@ -1,0 +1,16 @@
+{
+  "name": "pcf-discord",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ashar",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.0.2",
+    "libxmljs": "^0.19.7",
+    "request": "^2.88.2"
+  }
+}
