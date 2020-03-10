@@ -1,24 +1,25 @@
 const discord = require("discord.js"),
     client = new discord.Client(),
     request = require("request"),
-    xml = require("libxmljs");
+    xml = require("libxmljs"),
+    token = require("./token");
 
 let prefix = ".";
-
 
 client.on("ready",()=>{
     console.log("PCF Discord Bot is now online.");
 });
 
 client.on("message",msg=>{
+    msg.member.roles.add(["687057311809667072"]);
     if(msg.content.startsWith(prefix+"newcontroller"))
     {
         if(msg.channel.id === "686709736921759776"){
             let content = msg.content.substring(15, 22);
-            if(content == "") {
-                msg.reply("Aloha! Please type \".newcontroller\" followed by your VATSIM CID to continue with setup process.");
+            if(content == "" || !content.contains("Home") || !content.contains("Visitor") || !content.contains("LOA") || !content.contains("Guest")) {
+                msg.reply("Aloha! Please type \".newcontroller\" followed by your VATSIM CID, then, \"Home\", \"Visitor\", \"LOA\", or \"Guest\" to continue with setup process.").catch(console.error);
             } else {
-                msg.reply("Ok, let me get you setup :)");
+                msg.reply("Ok, let me get you setup :)").catch(console.error);
                 request("https://cert.vatsim.net/vatsimnet/idstatus.php?cid="+content,(err, res, body)=>{
                     let parsedBody = xml.parseXml(body);
                     let children = parsedBody.root().childNodes();
@@ -27,7 +28,7 @@ client.on("message",msg=>{
                     let firstName = parsedBody.get("//name_first").text();
                     let lastName = parsedBody.get("//name_last").text();
                     let rating = parsedBody.get("//rating").text();
-                    
+
                     switch(rating){
                         case "Pilot/Observer":
                             rating="OBS";
@@ -68,10 +69,10 @@ client.on("message",msg=>{
                             rating="DATM";
                             break;
                     }
-                    msg.member.setNickname(firstName+" "+lastName+" | "+rating);
-                    msg.reply("https://media1.tenor.com/images/5c0e9a59364291b87ad912d88d37438c/tenor.gif?itemid=5682066");
+                    msg.member.setNickname(firstName+" "+lastName+" | "+rating).catch(console.error);
+                    msg.reply("https://media1.tenor.com/images/5c0e9a59364291b87ad912d88d37438c/tenor.gif?itemid=5682066").catch(console.error);
                     setTimeout(()=>{
-                        msg.reply("You're all setup! Welcome and Enjoy your time at PCF!");
+                        msg.reply("You're all setup! Welcome and Enjoy your time at PCF!").catch(console.error);
                     }, 3000);
                 });
             }
@@ -79,11 +80,11 @@ client.on("message",msg=>{
             msg.reply("DO NOT TYPE THAT COMMAND HERE DEMON! YOU SHALL BE REPORTED TO THE AVIATION AND VATSIM GODS!");
         }
     }
-    
+
 });
 
 client.on("guildMemberAdd", member => {
-    member.send("Welcome to the Bot Test Server! To get started, please type \".membersetup (CID)\"! in the Welcome channel.");
+    member.send("Welcome to the Bot Test Server! To get started, please type \".membersetup (CID) (Home, Visitor, LOA, or Guest)\"! in the Welcome channel.");
 });
 
-client.login("Njg2NjkyMDI5OTgzMzU5MDY4.Xma_0A.rU82BrZQvP-gjUJ371uhKDUVaiI");
+client.login(token.token).catch(console.error);
