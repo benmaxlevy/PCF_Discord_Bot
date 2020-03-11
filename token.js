@@ -1,3 +1,3 @@
-const token = "Njg2NjkyMDI5OTgzMzU5MDY4.XmgOcA.9Fqzv9iw8JhfrOEPMbQ1n8uBPgg";
+const token = "Njg2NjkyMDI5OTgzMzU5MDY4.XmguWg.xkN7nsT-C46avUpKb3kMXs7CQhk";
 
 exports.token = token;

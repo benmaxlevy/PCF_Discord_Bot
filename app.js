@@ -11,14 +11,16 @@ client.on("ready",()=>{
 });
 
 client.on("message",msg=>{
-    msg.member.roles.add(["687057311809667072"]);
     if(msg.content.startsWith(prefix+"newcontroller"))
     {
         if(msg.channel.id === "686709736921759776"){
             let content = msg.content.substring(15, 22);
-            if(content == "" || !content.contains("Home") || !content.contains("Visitor") || !content.contains("LOA") || !content.contains("Guest")) {
-                msg.reply("Aloha! Please type \".newcontroller\" followed by your VATSIM CID, then, \"Home\", \"Visitor\", \"LOA\", or \"Guest\" to continue with setup process.").catch(console.error);
-            } else {
+            let content2 = msg.content.substring(0);
+            if(content === "") {
+                if (!content2.includes("Home") || !content2.includes("Visitor") || !content2.includes("LOA") || content2.includes("Guest") === false) {
+                    msg.reply("Aloha! Please type \".newcontroller\" followed by your VATSIM CID, then, \"Home\", \"Visitor\", \"LOA\", or \"Guest\" to continue with setup process.").catch(console.error);
+                }
+                } else {
                 msg.reply("Ok, let me get you setup :)").catch(console.error);
                 request("https://cert.vatsim.net/vatsimnet/idstatus.php?cid="+content,(err, res, body)=>{
                     let parsedBody = xml.parseXml(body);
@@ -28,6 +30,10 @@ client.on("message",msg=>{
                     let firstName = parsedBody.get("//name_first").text();
                     let lastName = parsedBody.get("//name_last").text();
                     let rating = parsedBody.get("//rating").text();
+
+                    if(content2.includes("Guest")){
+                        msg.member.roles.add(["687057311809667072"]);
+                    }
 
                     switch(rating){
                         case "Pilot/Observer":
