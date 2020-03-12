@@ -1,8 +1,9 @@
 const request = require("request"),
     xmljs = require("xml-js");
 
-const newcontroller = (msg, author)=>
+const newcontroller = (msg, client)=>
 {
+    const welcome = client.channels.cache.get("686709736921759776");
     if (msg.channel.id === "686709736921759776") {
         let content = msg.content.substring(15, 22);
         let content2 = msg.content.substring(0);
@@ -80,7 +81,7 @@ const newcontroller = (msg, author)=>
             });
         }
     } else {
-        msg.reply("That command is restricted to the #welcome channel. Please refrain from using this command outside that channel.");
+        msg.reply(`That command is restricted to the ${welcome} channel. Please refrain from using this command outside that channel.`);
     }
 };
 

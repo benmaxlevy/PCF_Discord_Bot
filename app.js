@@ -2,9 +2,9 @@ const discord = require("discord.js"),
     client = new discord.Client(),
     token = require("./token"),
     newcontroller = require("./components/newcontroller"),
-    metar = require("./components/metar"),
     updater = require("./components/roleUpdater"),
-    atisIDS = require("./components/atisIDS");
+    atisIDS = require("./components/atisIDS"),
+    help = require("./components/help");
 
 let prefix = ".";
 
@@ -15,21 +15,20 @@ client.on("ready",()=>{
 client.on("message",msg=>{
     //for welcome channel only
     if (msg.content.startsWith(prefix + "newcontroller")) {
-        newcontroller.newcontroller(msg);
-    }
-    if (msg.content.startsWith(prefix + "metar")){
-        metar.getMetar(msg);
-    } else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
+        newcontroller.newcontroller(msg, client);
+    }else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
         msg.reply("This feature is not ready yet, sorry!");
         // setInterval(()=>{
         // updater.roleUpdater(msg);
         // }, 9000); //every 15 min
     } else if (msg.content.startsWith(prefix + "addAtis")){
-        atisIDS.addAtis(msg, client);
+        atisIDS.addAtis(msg, client, discord);
     } else if (msg.content.startsWith(prefix+"modifyAtis")){
-        atisIDS.modifyAtis(msg, client);
+        atisIDS.modifyAtis(msg, client, discord);
     } else if (msg.content.startsWith(prefix+"removeAtis")){
-        atisIDS.removeAtis(msg, client);
+        atisIDS.removeAtis(msg, client, discord);
+    } else if (msg.content.startsWith(prefix+"help")){
+        help.help(msg, discord, client);
     }
 });
 
