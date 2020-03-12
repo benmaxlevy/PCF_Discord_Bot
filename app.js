@@ -11,11 +11,24 @@ client.on("ready",()=>{
 });
 
 client.on("message",msg=>{
+    //for welcome channel only
     if (msg.content.startsWith(prefix + "newcontroller")) {
         newcontroller.newcontroller(msg);
-    } else if (msg.content.startsWith(prefix + "metar")){
-        metar.getMetar(msg);
     }
+    //for bot-commands channel only
+    if(msg.content.startsWith(prefix) && msg.channel.id === "687634150693404688"){
+        if (msg.content.startsWith(prefix + "metar")){
+            metar.getMetar(msg);
+        } else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
+            msg.reply("This feature is not ready yet, sorry!");
+            // setInterval(()=>{
+            //
+            // }, 9000); //every 15 min
+        }
+    } else {
+        msg.reply("That command is restricted to the #bot-commands channel. Please refrain from using this command outside that channel.");
+    }
+
 });
 
 client.on("guildMemberAdd", member => {

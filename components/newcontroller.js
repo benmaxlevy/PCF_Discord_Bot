@@ -1,7 +1,7 @@
 const request = require("request"),
     xmljs = require("xml-js");
 
-const newcontroller = (msg)=>
+const newcontroller = (msg, author)=>
 {
     if (msg.channel.id === "686709736921759776") {
         let content = msg.content.substring(15, 22);
@@ -11,7 +11,6 @@ const newcontroller = (msg)=>
                 msg.reply("Aloha! Please type \".newcontroller\" followed by your VATSIM CID, then, \"Home\", \"Visitor\", \"LOA\", or \"Guest\" to continue with setup process.").catch(console.error);
             }
         } else {
-            msg.reply("Ok, let me get you setup :)").catch(console.error);
             request("https://cert.vatsim.net/vatsimnet/idstatus.php?cid=" + content, (err, res, body) => {
                 let result = xmljs.xml2json(body, {compact: true});
                 let parsedResult = JSON.parse(result);
