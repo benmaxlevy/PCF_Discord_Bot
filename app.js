@@ -1,7 +1,8 @@
 const discord = require("discord.js"),
     client = new discord.Client(),
     token = require("./token"),
-    newcontroller = require("./components/newcontroller");
+    newcontroller = require("./components/newcontroller"),
+    metar = require("./components/metar");
 
 let prefix = ".";
 
@@ -13,7 +14,7 @@ client.on("message",msg=>{
     if (msg.content.startsWith(prefix + "newcontroller")) {
         newcontroller.newcontroller(msg);
     } else if (msg.content.startsWith(prefix + "metar")){
-
+        metar.getMetar(msg);
     }
 });
 

@@ -1,5 +1,5 @@
 const request = require("request"),
-    xml = require("libxmljs");
+    xmljs = require("xml-js");
 
 const newcontroller = (msg)=>
 {
@@ -13,48 +13,54 @@ const newcontroller = (msg)=>
         } else {
             msg.reply("Ok, let me get you setup :)").catch(console.error);
             request("https://cert.vatsim.net/vatsimnet/idstatus.php?cid=" + content, (err, res, body) => {
-                let parsedBody = xml.parseXml(body);
-                let children = parsedBody.root().childNodes();
-                let child = children[0];
-                let cid = child.attr("cid").value();
-                let firstName = parsedBody.get("//name_first").text();
-                let lastName = parsedBody.get("//name_last").text();
-                let rating = parsedBody.get("//rating").text();
+                let result = xmljs.xml2json(body, {compact: true});
+                let parsedResult = JSON.parse(result);
+                let cid = parsedResult.root.user.cid;
+                let firstName = parsedResult.root.user.name_first._text;
+                let lastName = parsedResult.root.user.name_last._text;
+                let rating = parsedResult.root.user.rating._text;
 
                 if (content2.includes("Guest")) {
-                    msg.member.roles.add(["687057311809667072"]);
+                    msg.member.roles.add(["687057311809667072"]).catch(console.error);
                 } else if (content2.includes("LOA")) {
-                    msg.member.roles.add(["687057393363845236"]);
+                    msg.member.roles.add(["687057393363845236"]).catch(console.error);
                 } else if (content2.includes("Visitor")) {
-                    msg.member.roles.add(["686701515376951305"]);
+                    msg.member.roles.add(["686701515376951305"]).catch(console.error);
                 } else if (content2.includes("Home")) {
-                    msg.member.roles.add(["686701486004371533"]);
+                    msg.member.roles.add(["686701486004371533"]).catch(console.error);
                 }
-
                 switch (rating) {
                     case "Pilot/Observer":
                         rating = "OBS";
+                        msg.member.roles.add(["687483883880710146"]).catch(console.error);
                         break;
                     case "Student":
                         rating = "S1";
+                        msg.member.roles.add(["686701333621112923"]).catch(console.error);
                         break;
                     case "Student 2":
                         rating = "S2";
+                        msg.member.roles.add(["686701362502696982"]).catch(console.error);
                         break;
                     case "Senior Student":
                         rating = "S3";
+                        msg.member.roles.add(["686701376096567349"]).catch(console.error);
                         break;
                     case "Controller":
                         rating = "C1";
+                        msg.member.roles.add(["686701388163448869"]).catch(console.error);
                         break;
                     case "Senior Controller":
                         rating = "C3";
+                        msg.member.roles.add(["686701399870144661"]).catch(console.error);
                         break;
                     case "Instructor":
                         rating = "I1";
+                        msg.member.roles.add(["686701415334150194"]).catch(console.error);
                         break;
                     case "Senior Instructor":
                         rating = "I3";
+                        msg.member.roles.add(["686701431247732843"]).catch(console.error);
                         break;
                     case "Supervisor":
                         rating = "SUP";
@@ -71,15 +77,11 @@ const newcontroller = (msg)=>
                         rating = "DATM";
                         break;
                 }
-                msg.member.setNickname(firstName + " " + lastName + " | " + rating).catch(console.error);
-                msg.reply("https://media1.tenor.com/images/5c0e9a59364291b87ad912d88d37438c/tenor.gif?itemid=5682066").catch(console.error);
-                setTimeout(() => {
-                    msg.reply("You're all setup! Welcome and Enjoy your time at PCF! Live long and prosper! https://tenor.com/view/spock-star-trek-hood-gif-5625136").catch(console.error);
-                }, 3000);
+                msg.member.setNickname(firstName.toString()+" "+lastName.toString()+" | "+rating.toString());
             });
         }
     } else {
-        msg.reply("DO NOT TYPE THAT COMMAND HERE DEMON! YOU SHALL BE REPORTED TO THE AVIATION AND VATSIM GODS!");
+        msg.reply("That command is restricted to the #welcome channel. Please refrain from using this command outside that channel.");
     }
 };
 
