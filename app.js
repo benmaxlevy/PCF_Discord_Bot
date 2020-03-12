@@ -2,7 +2,9 @@ const discord = require("discord.js"),
     client = new discord.Client(),
     token = require("./token"),
     newcontroller = require("./components/newcontroller"),
-    metar = require("./components/metar");
+    metar = require("./components/metar"),
+    updater = require("./components/roleUpdater"),
+    atisIDS = require("./components/atisIDS");
 
 let prefix = ".";
 
@@ -15,20 +17,20 @@ client.on("message",msg=>{
     if (msg.content.startsWith(prefix + "newcontroller")) {
         newcontroller.newcontroller(msg);
     }
-    //for bot-commands channel only
-    if(msg.content.startsWith(prefix) && msg.channel.id === "687634150693404688"){
-        if (msg.content.startsWith(prefix + "metar")){
-            metar.getMetar(msg);
-        } else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
-            msg.reply("This feature is not ready yet, sorry!");
-            // setInterval(()=>{
-            //
-            // }, 9000); //every 15 min
-        }
-    } else {
-        msg.reply("That command is restricted to the #bot-commands channel. Please refrain from using this command outside that channel.");
+    if (msg.content.startsWith(prefix + "metar")){
+        metar.getMetar(msg);
+    } else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
+        msg.reply("This feature is not ready yet, sorry!");
+        // setInterval(()=>{
+        // updater.roleUpdater(msg);
+        // }, 9000); //every 15 min
+    } else if (msg.content.startsWith(prefix + "addAtis")){
+        atisIDS.addAtis(msg, client);
+    } else if (msg.content.startsWith(prefix+"modifyAtis")){
+        atisIDS.modifyAtis(msg, client);
+    } else if (msg.content.startsWith(prefix+"removeAtis")){
+        atisIDS.removeAtis(msg, client);
     }
-
 });
 
 client.on("guildMemberAdd", member => {
