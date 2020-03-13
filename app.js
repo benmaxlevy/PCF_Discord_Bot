@@ -4,7 +4,8 @@ const discord = require("discord.js"),
     newcontroller = require("./components/newcontroller"),
     updater = require("./components/roleUpdater"),
     atisIDS = require("./components/atisIDS"),
-    help = require("./components/help");
+    help = require("./components/help"),
+    wallop = require("./components/wallop");
 
 let prefix = ".";
 
@@ -29,6 +30,8 @@ client.on("message",msg=>{
         atisIDS.removeAtis(msg, client, discord);
     } else if (msg.content.startsWith(prefix+"help")){
         help.help(msg, discord, client);
+    } else if (msg.content.startsWith(prefix+"wallop")){
+        wallop.wallop(msg, client, discord);
     }
 });
 

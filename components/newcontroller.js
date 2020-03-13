@@ -77,7 +77,6 @@ const newcontroller = (msg, client)=>
                         rating = "DATM";
                         break;
                 }
-                msg.member.setNickname(firstName.toString()+" "+lastName.toString()+" | "+rating.toString());
             });
         }
     } else {
