@@ -9,6 +9,7 @@ const help = (msg, discord, client)=>{
             .addField("ATIS Commands - Add ATIS", ".addAtis [Airport (ICAO)] [Current Info] [Runway Ops]")
             .addField("ATIS Commands - Modify ATIS",".modifyAtis [Airport (ICAO)] [Current Info] [Runway Ops]")
             .addField("ATIS Commands - Remove ATIS",".removeAtis [Airport (ICAO)]")
+            .addField("Wallop Report", ".wallop [mention to user] [reason]")
             .addField("Role Updater (Administrator ONLY)", ".startRoleUpdater");
         msg.reply(helpEmbed)
     } else {

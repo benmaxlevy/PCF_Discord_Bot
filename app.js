@@ -15,22 +15,23 @@ client.on("ready",()=>{
 
 client.on("message",msg=>{
     //for welcome channel only
-    if (msg.content.startsWith(prefix + "newcontroller")) {
+    let content = msg.content.toLowerCase();
+    if (content.startsWith(prefix + "newcontroller")) {
         newcontroller.newcontroller(msg, client);
-    }else if (msg.content.startsWith(prefix+"startRoleUpdater")) {
+    }else if (content.startsWith(prefix+"startroleupdater")) {
         msg.reply("This feature is not ready yet, sorry!");
         // setInterval(()=>{
         // updater.roleUpdater(msg);
         // }, 9000); //every 15 min
-    } else if (msg.content.startsWith(prefix + "addAtis")){
+    } else if (content.startsWith(prefix + "addatis")){
         atisIDS.addAtis(msg, client, discord);
-    } else if (msg.content.startsWith(prefix+"modifyAtis")){
+    } else if (content.startsWith(prefix+"modifyatis")){
         atisIDS.modifyAtis(msg, client, discord);
-    } else if (msg.content.startsWith(prefix+"removeAtis")){
+    } else if (content.startsWith(prefix+"removeatis")){
         atisIDS.removeAtis(msg, client, discord);
-    } else if (msg.content.startsWith(prefix+"help")){
+    } else if (content.startsWith(prefix+"help")){
         help.help(msg, discord, client);
-    } else if (msg.content.startsWith(prefix+"wallop")){
+    } else if (content.startsWith(prefix+"wallop")){
         wallop.wallop(msg, client, discord);
     }
 });
