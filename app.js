@@ -5,7 +5,8 @@ const discord = require("discord.js"),
     updater = require("./components/roleUpdater"),
     atisIDS = require("./components/atisIDS"),
     help = require("./components/help"),
-    wallop = require("./components/wallop");
+    wallop = require("./components/wallop"),
+    positions = require("./components/positions");
 
 let prefix = ".";
 
@@ -33,6 +34,8 @@ client.on("message",msg=>{
         help.help(msg, discord, client);
     } else if (content.startsWith(prefix+"wallop")){
         wallop.wallop(msg, client, discord);
+    } else if (content.startsWith(prefix+"startpositionupdater")){
+        positions.update(msg, client, discord);
     }
 });
 
