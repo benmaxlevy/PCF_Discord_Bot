@@ -27,7 +27,7 @@ client.on("message",msg=>{
     } else if (content.startsWith(prefix + "addatis")){
         atisIDS.addAtis(msg, client, discord);
     } else if (content.startsWith(prefix+"modifyatis")){
-        atisIDS.modifyAtis(msg, client, discord);
+        atisIDS.addAtis(msg, client, discord);
     } else if (content.startsWith(prefix+"removeatis")){
         atisIDS.removeAtis(msg, client, discord);
     } else if (content.startsWith(prefix+"help")){
@@ -35,7 +35,9 @@ client.on("message",msg=>{
     } else if (content.startsWith(prefix+"wallop")){
         wallop.wallop(msg, client, discord);
     } else if (content.startsWith(prefix+"startpositionupdater")){
-        positions.update(msg, client, discord);
+        setInterval(()=>{
+            positions.update(msg, client, discord);
+        }, 9000);
     }
 });
 
