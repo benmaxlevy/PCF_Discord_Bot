@@ -22,6 +22,7 @@ const updatePositions = (msg,client,discord)=>{
             allControllers.forEach(() => {
                 position = allControllers[i].callsign;
                 positionFrequency = allControllers[i].frequency;
+
                 allPositionsCallsign.push(position);
                 positionFrequency = "1".concat(positionFrequency);
 
@@ -37,21 +38,36 @@ const updatePositions = (msg,client,discord)=>{
                 allPositions.push(positionFrequency);
 
                 if (!openPositions.includes(positionFrequency) && positionStuff.positions.includes(position)) {
-                    openPositions.push(positionFrequency);
+                    openPositions.push(position);
                     indexOfFreq = positionStuff.positionFreqs.indexOf(positionFrequency);
                     positionName = positionStuff.positionsName[indexOfFreq];
                     positionCallsign = positionStuff.positions[indexOfFreq];
-                    console.log("open"+openPositions);
-                    console.log(indexOfFreq+positionCallsign)
+                    let idsRole = msg.guild.roles.cache.get("687668232848539670");
+                    const ids4 = client.channels.cache.get("687641595197259872");
+                    const cntlOn = new discord.MessageEmbed()
+                        .setTitle("A Controller Has Logged On")
+                        .addField("Position", positionCallsign)
+                        .addField("Position Name", positionName)
+                        .addField("Position Callsign", positionFrequency)
+                        .setColor("#21db24");
+                    ids4.send(`${idsRole}`);
+                    ids4.send(cntlOn);
                 }
                 i++;
             });
             if(openPositions !== []) {
-                //freqs are not with decimal/1 at front.
                 for (let x = 0; x < openPositions.length; x++) {
-                    //console.log(allPositions+"-all open:"+openPositions[x]);
-                    if (!allPositionsCallsign.includes(positionCallsign)) {
-                        openPositions = openPositions.splice(x, 1);
+                    if (!allPositionsCallsign.includes(openPositions[i])) {
+                        let idsRole = msg.guild.roles.cache.get("687668232848539670");
+                        const ids4 = client.channels.cache.get("687641595197259872");
+                        const cntlOff = new discord.MessageEmbed()
+                            .setTitle("A Controller Has Logged Off")
+                            .addField("Position", openPositions[x])
+                            .addField("Position Name", positionStuff.positionsName[positionStuff.positions.indexOf(openPositions[x])])
+                            .setColor("#ff0000");
+                        ids4.send(`${idsRole}`);
+                        ids4.send(cntlOff);
+                        openPositions.splice(0, 1);
                     }
                 }
             }
