@@ -10,40 +10,47 @@ const updatePositions = (msg,client,discord)=>{
         request("http://us.data.vatsim.net/vatsim-data.json", (err, res, body) => {
             allPositions=[];
             allPositionsCallsign=[];
-            let allControllers = JSON.parse(body).controllers;
-            let position = allControllers[i].callsign;
-            let positionFrequency = allControllers[i].frequency;
+            let allControllers = JSON.parse(body).controllers;;
+            let position;
+            let positionFrequency;
 
-            positionFrequency = "1".concat(positionFrequency);
 
-            let firstHalf = positionFrequency.slice(0, 3);
-
-            let secondHalf = positionFrequency.slice(3, 5);
-
-            secondHalf = secondHalf.concat("0");
-
-            firstHalf = firstHalf.concat(".");
-
-            positionFrequency = firstHalf + secondHalf;
-
-            let indexOfFreq = positionStuff.positionFreqs.indexOf(positionFrequency);
-            let positionName = positionStuff.positionsName[indexOfFreq];
-            let positionCallsign = positionStuff.positions[indexOfFreq];
+            let indexOfFreq;
+            let positionName;
+            let positionCallsign;
 
             allControllers.forEach(() => {
-
-                allPositions.push(positionFrequency);
+                position = allControllers[i].callsign;
+                positionFrequency = allControllers[i].frequency;
                 allPositionsCallsign.push(position);
+                positionFrequency = "1".concat(positionFrequency);
+
+                let firstHalf = positionFrequency.slice(0, 3);
+
+                let secondHalf = positionFrequency.slice(3, 5);
+
+                secondHalf = secondHalf.concat("0");
+
+                firstHalf = firstHalf.concat(".");
+
+                positionFrequency = firstHalf + secondHalf;
+                allPositions.push(positionFrequency);
 
                 if (!openPositions.includes(positionFrequency) && positionStuff.positions.includes(position)) {
                     openPositions.push(positionFrequency);
+                    indexOfFreq = positionStuff.positionFreqs.indexOf(positionFrequency);
+                    positionName = positionStuff.positionsName[indexOfFreq];
+                    positionCallsign = positionStuff.positions[indexOfFreq];
+                    console.log("open"+openPositions);
+                    console.log(indexOfFreq+positionCallsign)
                 }
                 i++;
             });
             if(openPositions !== []) {
-
+                //freqs are not with decimal/1 at front.
                 for (let x = 0; x < openPositions.length; x++) {
-                    if (!allPositions.includes(openPositions[0]) && !allPositionsCallsign.includes(positionCallsign)) {
+                    //console.log(allPositions+"-all open:"+openPositions[x]);
+                    if (!allPositionsCallsign.includes(positionCallsign)) {
                         openPositions = openPositions.splice(x, 1);
                     }
                 }

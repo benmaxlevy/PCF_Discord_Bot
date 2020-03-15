@@ -35,9 +35,9 @@ client.on("message",msg=>{
     } else if (content.startsWith(prefix+"wallop")){
         wallop.wallop(msg, client, discord);
     } else if (content.startsWith(prefix+"startpositionupdater")){
-        setInterval(()=>{
+        //setInterval(()=>{
             positions.update(msg, client, discord);
-        }, 9000);
+        //}, 9000);
     }
 });
 
