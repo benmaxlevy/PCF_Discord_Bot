@@ -24,12 +24,8 @@ client.on("message",msg=>{
         // setInterval(()=>{
         // updater.roleUpdater(msg);
         // }, 9000); //every 15 min
-    } else if (content.startsWith(prefix + "addatis")){
+    } else if (content.startsWith(prefix + "updateatis")){
         atisIDS.addAtis(msg, client, discord);
-    } else if (content.startsWith(prefix+"modifyatis")){
-        atisIDS.addAtis(msg, client, discord);
-    } else if (content.startsWith(prefix+"removeatis")){
-        atisIDS.removeAtis(msg, client, discord);
     } else if (content.startsWith(prefix+"help")){
         help.help(msg, discord, client);
     } else if (content.startsWith(prefix+"wallop")){
