@@ -68,7 +68,7 @@ const updatePositions = (msg,client,discord)=>{
                                 .setColor("#ff0000");
                             ids4.send(`${idsRole}`);
                             ids4.send(cntlOff);
-                            openPositions.splice(0, 1);
+                            openPositions.splice(x, 1);
                         }
                     }
                 }
