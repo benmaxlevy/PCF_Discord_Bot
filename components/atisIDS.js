@@ -14,7 +14,14 @@ const addAtis = (msg, client, discord)=>{
         request("https://www.aviationweather.gov/adds/dataserver_current/httpparam?dataSource=metars&requestType=retrieve&format=xml&stationString="+apt.toUpperCase()+"&hoursBeforeNow=1", (err,res,body)=>{
             let result = xmljs.xml2json(body, {compact: true});
             let metarJSON = JSON.parse(result);
-            let metar = metarJSON.response.data.METAR.raw_text._text;
+            let metar;
+            if(metarJSON.response.data.METAR[0] != null){
+                metar = metarJSON.response.data.METAR[0].raw_text._text;
+            } else if (metarJSON.response.data.METAR != null){
+                metar = metarJSON.response.data.METAR.raw_text._text;
+            } else {
+                msg.reply("That airport is invalid.");
+            }
             const atisEmbed = new discord.MessageEmbed()
                 .setColor("#0099ff")
                 .setTitle(apt.toUpperCase()+" ATIS")
@@ -33,3 +40,4 @@ const addAtis = (msg, client, discord)=>{
 };
 
 exports.addAtis=addAtis;
+
