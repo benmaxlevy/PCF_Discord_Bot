@@ -35,9 +35,17 @@ client.on("message",msg=>{
     } else if (content.startsWith(prefix+"wallop")){
         wallop.wallop(msg, client, discord);
     } else if (content.startsWith(prefix+"startpositionupdater")){
-        setInterval(()=>{
-            positions.update(msg, client, discord);
-        }, 9000);
+        if(msg.member.hasPermission("ADMINISTRATOR")) {
+            if (msg.channel.id === "676668634298449921") {
+                setInterval(() => {
+                    positions.update(msg, client, discord);
+                }, 420000);
+            } else {
+                msg.reply("This command must be only used in the bot channel!");
+            }
+        } else {
+            msg.reply("You must be an administrator to use this command!");
+        }
     }
 });
 

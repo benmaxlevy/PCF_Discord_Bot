@@ -1,10 +1,10 @@
 const request = require("request"),
     positionStuff = require("./allPositions");
 
+let openPositions = [];
+
 const updatePositions = (msg,client,discord)=>{
-    if(msg.member.hasPermission("ADMINISTRATOR")) {
-        if (msg.channel.id === "676668634298449921") {
-            let openPositions = [];
+            console.log(openPositions);
             let allPositions = [];
             let allPositionsCallsign = [];
             let i = 0;
@@ -12,17 +12,16 @@ const updatePositions = (msg,client,discord)=>{
                 allPositions = [];
                 allPositionsCallsign = [];
                 let allControllers = JSON.parse(body).controllers;
-                ;
                 let position;
                 let positionFrequency;
                 let indexOfFreq;
                 let positionName;
                 let positionCallsign;
-
+                let name;
                 allControllers.forEach(() => {
                     position = allControllers[i].callsign;
                     positionFrequency = allControllers[i].frequency;
-
+                    name = allControllers[i].member.name;
                     allPositionsCallsign.push(position);
                     positionFrequency = "1".concat(positionFrequency);
 
@@ -37,18 +36,20 @@ const updatePositions = (msg,client,discord)=>{
                     positionFrequency = firstHalf + secondHalf;
                     allPositions.push(positionFrequency);
 
-                    if (!openPositions.includes(positionFrequency) && positionStuff.positions.includes(position)) {
+                    if (!openPositions.includes(position) && positionStuff.positions.includes(position)) {
+                        //console.log(position);
                         openPositions.push(position);
+                        //console.log(openPositions);
                         indexOfFreq = positionStuff.positionFreqs.indexOf(positionFrequency);
                         positionName = positionStuff.positionsName[indexOfFreq];
-                        positionCallsign = positionStuff.positions[indexOfFreq];
-                        let idsRole = msg.guild.roles.cache.get("687668232848539670");
+                        positionCallsign = position;
+                        let idsRole = msg.guild.roles.cache.get("689482236986261518");
                         const ids4 = client.channels.cache.get("676771395954540544");
                         const cntlOn = new discord.MessageEmbed()
-                            .setTitle("A Controller Has Logged On")
-                            .addField("Position", positionCallsign)
-                            .addField("Position Name", positionName)
-                            .addField("Position Callsign", positionFrequency)
+                            .setTitle(name+" Has Logged On")
+                            .addField("Callsign", positionCallsign)
+                            .addField("Radio Name", positionName)
+                            .addField("Frequency", positionFrequency)
                             .setColor("#21db24");
                         ids4.send(`${idsRole}`);
                         ids4.send(cntlOn);
@@ -57,13 +58,13 @@ const updatePositions = (msg,client,discord)=>{
                 });
                 if (openPositions !== []) {
                     for (let x = 0; x < openPositions.length; x++) {
-                        if (!allPositionsCallsign.includes(openPositions[i])) {
-                            let idsRole = msg.guild.roles.cache.get("687668232848539670");
+                        if (!allPositionsCallsign.includes(openPositions[x])) {
+                            let idsRole = msg.guild.roles.cache.get("689482236986261518");
                             const ids4 = client.channels.cache.get("676771395954540544");
                             const cntlOff = new discord.MessageEmbed()
                                 .setTitle("A Controller Has Logged Off")
-                                .addField("Position", openPositions[x])
-                                .addField("Position Name", positionStuff.positionsName[positionStuff.positions.indexOf(openPositions[x])])
+                                .addField("Callsign", openPositions[x])
+                                .addField("Radio Name", positionStuff.positionsName[positionStuff.positions.indexOf(openPositions[x])])
                                 .setColor("#ff0000");
                             ids4.send(`${idsRole}`);
                             ids4.send(cntlOff);
@@ -73,13 +74,6 @@ const updatePositions = (msg,client,discord)=>{
                 }
 
             });
-
-        } else {
-            msg.reply(`That command is restricted to the ${botChannel} channel. Please refrain from using this command outside that channel.`);
-        }
-    } else {
-        msg.reply("You must be an admin to use this command.");
-    }
 };
 
 exports.update = updatePositions;
