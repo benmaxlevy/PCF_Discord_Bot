@@ -3,8 +3,8 @@ const request = require("request"),
 
 const newcontroller = (msg, client)=>
 {
-    const welcome = client.channels.cache.get("686709736921759776");
-    if (msg.channel.id === "686709736921759776") {
+    const welcome = client.channels.cache.get("676662972285714432");
+    if (msg.channel.id === "676662972285714432") {
         let content = msg.content.substring(15, 22);
         let content2 = msg.content.substring(0);
         if (content === "") {
@@ -21,52 +21,54 @@ const newcontroller = (msg, client)=>
                 let rating = parsedResult.root.user.rating._text;
 
                 if (content2.includes("Guest")) {
-                    msg.member.roles.add(["687057311809667072"]).catch(console.error);
+                    msg.member.roles.add(["676630584805818381"]).catch(console.error);
                 } else if (content2.includes("LOA")) {
-                    msg.member.roles.add(["687057393363845236"]).catch(console.error);
+                    msg.member.roles.add(["687455955960463430"]).catch(console.error);
                 } else if (content2.includes("Visitor")) {
-                    msg.member.roles.add(["686701515376951305"]).catch(console.error);
+                    msg.member.roles.add(["676629880372461569"]).catch(console.error);
                 } else if (content2.includes("Home")) {
-                    msg.member.roles.add(["686701486004371533"]).catch(console.error);
+                    msg.member.roles.add(["676629816136695810"]).catch(console.error);
                 }
                 switch (rating) {
                     case "Pilot/Observer":
                         rating = "OBS";
-                        msg.member.roles.add(["687483883880710146"]).catch(console.error);
+                        msg.member.roles.add(["676633669913542677"]).catch(console.error);
                         break;
                     case "Student":
                         rating = "S1";
-                        msg.member.roles.add(["686701333621112923"]).catch(console.error);
+                        msg.member.roles.add(["676633942052306947"]).catch(console.error);
                         break;
                     case "Student 2":
                         rating = "S2";
-                        msg.member.roles.add(["686701362502696982"]).catch(console.error);
+                        msg.member.roles.add(["676634052639588382"]).catch(console.error);
                         break;
                     case "Senior Student":
                         rating = "S3";
-                        msg.member.roles.add(["686701376096567349"]).catch(console.error);
+                        msg.member.roles.add(["676634087389134859"]).catch(console.error);
                         break;
                     case "Controller":
                         rating = "C1";
-                        msg.member.roles.add(["686701388163448869"]).catch(console.error);
+                        msg.member.roles.add(["676634130036817923"]).catch(console.error);
                         break;
                     case "Senior Controller":
                         rating = "C3";
-                        msg.member.roles.add(["686701399870144661"]).catch(console.error);
+                        msg.member.roles.add(["676634156842745857"]).catch(console.error);
                         break;
                     case "Instructor":
                         rating = "I1";
-                        msg.member.roles.add(["686701415334150194"]).catch(console.error);
+                        msg.member.roles.add(["676636001547845651"]).catch(console.error);
                         break;
                     case "Senior Instructor":
                         rating = "I3";
-                        msg.member.roles.add(["686701431247732843"]).catch(console.error);
+                        msg.member.roles.add(["676636081956847627"]).catch(console.error);
                         break;
                     case "Supervisor":
                         rating = "SUP";
+                        msg.member.roles.add(["689484196477010069"]).catch(console.error);
                         break;
                     case "Administrator":
                         rating = "ADM";
+                        msg.member.roles.add(["689484744815411263"]).catch(console.error);
                         break;
                 }
                 switch (cid) {

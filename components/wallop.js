@@ -1,7 +1,7 @@
 const wallop = (msg, client, discord) => {
-    const botChannel = client.channels.cache.get("687634150693404688");
-    const reportChannel = client.channels.cache.get("687852719859433477");
-    if(msg.channel.id === "687634150693404688") {
+    const botChannel = client.channels.cache.get("676668634298449921");
+    const reportChannel = client.channels.cache.get("689482641413636127");
+    if(msg.channel.id === "676668634298449921") {
         if(msg.mentions.members.first()){
             let reportedId = msg.mentions.members.first().id;
             let reported = msg.mentions.members.first();

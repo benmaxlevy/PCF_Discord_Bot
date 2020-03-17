@@ -1,10 +1,10 @@
 const addAtis = (msg, client, discord)=>{
-    const botChannel = client.channels.cache.get("687634150693404688");
-    if(msg.channel.id === "687634150693404688") {
+    const botChannel = client.channels.cache.get("676668634298449921");
+    if(msg.channel.id === "676668634298449921") {
         const apt = msg.content.substring(9, 13);
         const code = msg.content.substring(14, 15);
         const ops = msg.content.substring(16);
-        const ids4 = client.channels.cache.get("687641595197259872");
+        const ids4 = client.channels.cache.get("676771395954540544");
         let idsRole = msg.guild.roles.cache.get("687668232848539670");
         const atisEmbed = new discord.MessageEmbed()
             .setColor("#0099ff")
