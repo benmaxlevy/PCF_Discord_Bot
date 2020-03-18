@@ -1,4 +1,6 @@
 const positions = [
+    "ZAK_E_FSS",
+    "ZAK_W_FSS",
     "HNL_CTR",
     "HNL_SH_CTR",
     "HNL_SL_CTR",
@@ -108,6 +110,8 @@ const positions = [
 ];
 
 const positionsName = [
+    "San Francisco Radio",
+    "San Francisco Radio",
     "H-C-F Center",
     "H-C-F Center",
     "H-C-F Center",
@@ -216,6 +220,8 @@ const positionsName = [
     "Kodiak Ground"
 ];
 const positionsFreq=[
+    "131.950",
+    "122.500",
     "124.100",
     "124.100",
     "126.000",
