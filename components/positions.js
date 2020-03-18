@@ -14,7 +14,7 @@ const updatePositions = (msg,client,discord)=>{
                 let allControllers = JSON.parse(body).controllers;
                 let position;
                 let positionFrequency;
-                let indexOfFreq;
+                let indexOfCallsign;
                 let positionName;
                 let positionCallsign;
                 let name;
@@ -40,8 +40,8 @@ const updatePositions = (msg,client,discord)=>{
                         //console.log(position);
                         openPositions.push(position);
                         //console.log(openPositions);
-                        indexOfFreq = positionStuff.positionFreqs.indexOf(positionFrequency);
-                        positionName = positionStuff.positionsName[indexOfFreq];
+                        indexOfCallsign = positionStuff.positions.indexOf(position);
+                        positionName = positionStuff.positionsName[indexOfCallsign];
                         positionCallsign = position;
                         let idsRole = msg.guild.roles.cache.get("689482236986261518");
                         const ids4 = client.channels.cache.get("676771395954540544");
